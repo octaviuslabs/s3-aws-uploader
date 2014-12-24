@@ -1,14 +1,29 @@
 require 'spec_helper'
 require './lib/s3_aws_uploader'
 
-
 ### Required Elements
-# Controller
-# HTML Helper
+# HTML
+# There is a styled Button that says upload
+# On click it triggers the upload
+# Get REQUEST happens for the policy (to our server)
+# POST To AWS happens
+# Progress happens
+# File location is placed into the application form
 
 module S3AwsUploader
 
-  context "allows you to configure" do
+  context "HTML Helper" do
+    it "generates a styled button that triggers upload on click"
+    it "makes a GET request for the policy"
+    it "posts the file and policy to AWS"
+    it "streams back progress"
+    it "writes the location back into the users form"
+
+    # Failed states
+    it "notify the user of a failed upload via flash hash update"
+  end
+
+  context "Configuration" do
     subject(:my_module) do
       S3AwsUploader.configure do |c|
         c.storage_path = "FOO PATH"
