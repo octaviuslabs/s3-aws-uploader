@@ -23,12 +23,16 @@ module S3AwsUploader
         conditions: [
           #["starts-with", "$utf8", ""],
           ["starts-with", "$key", ""],
-          ["content-length-range", 0, max_filesize],
+          ["content-length-range", 0, max_filesize_in_bytes],
           {bucket: bucket},
           {success_action_status: success_action_status},
           {acl: acl}
         ]
       }
+    end
+
+    def max_filesize_in_bytes
+      max_filesize * (1024 ** 2)
     end
 
     def to_h

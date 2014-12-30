@@ -23,7 +23,7 @@ module S3AwsUploader
           conditions: [
             #["starts-with", "$utf8", ""],
             ["starts-with", "$key", ""],
-            ["content-length-range", 0, 1024],
+            ["content-length-range", 0, (1024 * (1024 ** 2))],
             {bucket: "thebucket"},
             {success_action_status: "201"},
             {acl: "public-read"}

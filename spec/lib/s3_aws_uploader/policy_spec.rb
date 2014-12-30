@@ -23,6 +23,11 @@ module S3AwsUploader
       expect(subject.policy_payload).to eql TestUtils.example_policy_payload
     end
 
+    it "should convert max_filesize from megabytes to bytes" do
+      subject.max_filesize = 10
+      expect(subject.max_filesize_in_bytes).to eql 10485760
+    end
+
     it "should have a properly formatted hash" do
       allow(subject).to receive(:policy){ "THISISMYPOLICY" }
       allow(subject).to receive(:signature){ "THISISMYSIGNATURE" }
