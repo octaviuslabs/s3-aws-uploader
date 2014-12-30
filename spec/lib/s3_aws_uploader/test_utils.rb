@@ -33,8 +33,8 @@ module S3AwsUploader
 
     def self.example_policy_hash
       {
-        "url" => "https://thebucket.s3.amazonaws.com/",
-        "key" => "FOO PATH/RANDOMSTRING/{{{filename}}}",
+        "url" => "https://thebucket.A HOST/",
+        "key" => "FOO PATH/RANDOMSTRING/${filename}",
         "acl" => "public-read",
         "policy" => "THISISMYPOLICY",
         "signature" => "THISISMYSIGNATURE",

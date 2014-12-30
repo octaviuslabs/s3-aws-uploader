@@ -26,7 +26,8 @@ module S3AwsUploader
     it "should have a properly formatted hash" do
       allow(subject).to receive(:policy){ "THISISMYPOLICY" }
       allow(subject).to receive(:signature){ "THISISMYSIGNATURE" }
-      allow(subject).to receive(:slug){ "FOO PATH/RANDOMSTRING/{{{filename}}}" }
+      allow(subject).to receive(:slug){ "FOO PATH/RANDOMSTRING/${filename}" }
+      allow(subject).to receive(:host){ "A HOST" }
       expect(subject.to_h).to eql TestUtils.example_policy_hash
     end
 
@@ -37,13 +38,13 @@ module S3AwsUploader
     end
 
     it "should build the url" do
-      url_expectation = %[https://thebucket.s3.amazonaws.com/]
+      url_expectation = %[https://thebucket.A HOST/]
       expect(subject.url).to eql url_expectation
     end
 
     it "should build the slug" do
       allow(subject).to receive(:random_uuid){ "RANDOMSTRING" }
-      expectation = "FOO PATH/RANDOMSTRING/{{{filename}}}"
+      expectation = "FOO PATH/RANDOMSTRING/${filename}"
       expect(subject.slug).to eql expectation
     end
     it "may be able to change the name of the file on upload"
