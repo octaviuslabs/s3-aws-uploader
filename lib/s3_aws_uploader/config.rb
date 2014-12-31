@@ -4,10 +4,10 @@ module S3AwsUploader
   class Config
     attr_accessor :storage_path, :access_key, :secret_key, :host, :policy_expiration, :max_filesize, :bucket
     def initialize
-      @storage_path = "uploads"
-      @policy_expiration = 60 #in minutes
-      @max_filesize = 500 #in megabytes
-      @bucket = "s3_uploader"
+      @storage_path = "uploads" #  "#{storage_path}/#{random_uuid}/${filename}"
+      @policy_expiration = 60 # in minutes
+      @max_filesize = 500 # in megabytes
+      @bucket = "s3_uploader" # specify the name of your AWS S3 bucket!
       @host = "s3.amazonaws.com"
     end
 

@@ -1,4 +1,3 @@
-# README IN PROGRESS
 # S3 AWS Uploader
 
 S3 AWS Uploader provides form helpers to easily allow uploads directly to Amazon S3. The gem is intended to be used with Bootstrap and jQuery-fileupload and avoids excessive magic.
@@ -39,13 +38,13 @@ Enable CORS on your AWS S3 bucket by changing the settings on AWS to something l
 
     Provide example CORS settings...
 
-**mount the gem: /config/routes.rb**
+**Mount the gem: /config/routes.rb**
 
     mount S3AwsUploader::Engine, at: '/s3_uploader'
 
 - Provide a better explanation of this...
 
-**include view helper in appropriate controller**
+**Include view helper in the appropriate controller(s)**
 
 In the controller that serves the views/forms for your uploads, include the following helper method `helper S3AwsUploader::ViewHelpers`.
 
@@ -59,12 +58,10 @@ Example
 
 For your view, there are two main elements. Your view will end up looking like the following example:
 
-    <%= form_for(@upload, :html => {:multipart => true}) do |f| %>
+    <%= form_for(@upload) do |f| %>
         <%= f.text_field :product_image, style: "display:none" %>
         <%= bootstrap_s3_upload(:product_image, '/s3_uploader/policy/new') %>
     <% end %>
-    
-Please note, you likely need to add :html => {:multipart => true} to your form (verify this).
 
 The form helper `bootstrap_s3_upload` generates a file attachment field and a progress bar. The helper takes two parameters: (1) the string/text field name on your model/form that will store the path of the uploaded file and (2) the path to your controller that serves AWS S3 policies -- which is located at `'/s3_uploader/policy/new'` by default.
 
@@ -82,6 +79,8 @@ The JavaScript helper method octaviusUpload takes three parameters: (1) fileInpu
 
 As stated above, make sure your AWS S3 CORS Settings for your bucket look like this: ...
 
+(http://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html)
+
 ## Example application
 
 An application that demonstrates the usage of the gem has been included. See `path/to/example` for clarification.
@@ -95,4 +94,3 @@ If the file is successfully saved to S3, a callback will catch the full path of 
 ## Thanks
 
 ## License
-
