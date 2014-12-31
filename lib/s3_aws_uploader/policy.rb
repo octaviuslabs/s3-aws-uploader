@@ -10,7 +10,6 @@ module S3AwsUploader
       raise "No config provided on module!" if S3AwsUploader.config.nil?
       @success_action_status = "201"
       @acl = "public-read"
-      @url_base = "s3.amazonaws.com"
       super(S3AwsUploader.config)
     end
 
@@ -24,12 +23,16 @@ module S3AwsUploader
         conditions: [
           #["starts-with", "$utf8", ""],
           ["starts-with", "$key", ""],
-          ["content-length-range", 0, max_filesize],
+          ["content-length-range", 0, max_filesize_in_bytes],
           {bucket: bucket},
           {success_action_status: success_action_status},
           {acl: acl}
         ]
       }
+    end
+
+    def max_filesize_in_bytes
+      max_filesize * (1024 ** 2)
     end
 
     def to_h
@@ -49,11 +52,11 @@ module S3AwsUploader
     end
 
     def url
-      "https://#{bucket}.#{@url_base}/"
+      "https://#{bucket}.#{host}/"
     end
 
     def slug
-      "#{storage_path}/#{random_uuid}/{{{filename}}}"
+      "#{storage_path}/#{random_uuid}/${filename}"
     end
 
   private
@@ -66,7 +69,7 @@ module S3AwsUploader
     #
     #
     def policy_time_out
-      @policy_time_out ||= Time.now+policy_expiration
+      @policy_time_out ||= (Time.new.utc+(policy_expiration*60)).strftime("%Y-%m-%dT%H:%M:%SZ")
     end
 
     # Calculates the signature from the policy and secret ket

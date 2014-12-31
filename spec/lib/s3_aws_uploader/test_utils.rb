@@ -23,7 +23,7 @@ module S3AwsUploader
           conditions: [
             #["starts-with", "$utf8", ""],
             ["starts-with", "$key", ""],
-            ["content-length-range", 0, 1024],
+            ["content-length-range", 0, (1024 * (1024 ** 2))],
             {bucket: "thebucket"},
             {success_action_status: "201"},
             {acl: "public-read"}
@@ -33,8 +33,8 @@ module S3AwsUploader
 
     def self.example_policy_hash
       {
-        "url" => "https://thebucket.s3.amazonaws.com/",
-        "key" => "FOO PATH/RANDOMSTRING/{{{filename}}}",
+        "url" => "https://thebucket.A HOST/",
+        "key" => "FOO PATH/RANDOMSTRING/${filename}",
         "acl" => "public-read",
         "policy" => "THISISMYPOLICY",
         "signature" => "THISISMYSIGNATURE",

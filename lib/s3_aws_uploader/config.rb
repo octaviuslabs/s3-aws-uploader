@@ -8,6 +8,7 @@ module S3AwsUploader
       @policy_expiration = 60 #in minutes
       @max_filesize = 500 #in megabytes
       @bucket = "s3_uploader"
+      @host = "s3.amazonaws.com"
     end
 
     def access_key
@@ -22,7 +23,7 @@ module S3AwsUploader
     end
 
     def host
-      raise "No host key specified" if @host.nil?
+      raise "No host location specified" if @host.nil?
       return @host
     end
   end

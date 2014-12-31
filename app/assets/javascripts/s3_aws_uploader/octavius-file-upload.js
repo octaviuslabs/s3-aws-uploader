@@ -5,12 +5,6 @@ function octaviusUpload(fileInputSelector, progressBarSelector, inputReplacement
   $(fileInputSelector).fileupload({ 
     autoUpload: false,
     add: function(e, data) {
-      /*
-       * !!!
-       * Add JavaScript file type validation: .jpg, .png, etc...
-       * See Railscast on jquery-fileupload for example code.
-       *
-       */
 
       $.ajax({
         url: $(fileInputSelector).data('path'),
@@ -65,7 +59,12 @@ function octaviusUpload(fileInputSelector, progressBarSelector, inputReplacement
       $(inputReplacementSelector).val(fileAmazonFullPath);
     },
     fail: function(e, data) {
-      alert('File failed to upload =(');
+      var errorMessage = $(data.jqXHR.responseXML).find("Error > Message").text();
+      if (errorMessage) {
+        alert('File failed to upload =(\n\nError: ' + errorMessage);
+      } else {
+        alert('File failed to upload =(');
+      }
     }
   });
 }

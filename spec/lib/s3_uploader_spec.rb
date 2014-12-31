@@ -12,17 +12,6 @@ require './lib/s3_aws_uploader'
 
 module S3AwsUploader
 
-  context "HTML Helper" do
-    it "generates a styled button that triggers upload on click"
-    it "makes a GET request for the policy"
-    it "posts the file and policy to AWS"
-    it "streams back progress"
-    it "writes the location back into the users form"
-
-    # Failed states
-    it "notify the user of a failed upload via flash hash update"
-  end
-
   context "Configuration" do
     subject(:my_module) do
       S3AwsUploader.configure do |c|

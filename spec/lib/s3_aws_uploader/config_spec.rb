@@ -2,7 +2,7 @@ require 'spec_helper'
 require './lib/s3_aws_uploader/config'
 
 module S3AwsUploader
-  describe Config, focus: true do
+  describe Config do
     subject(:config){ Config.new }
     it { is_expected.to respond_to(:storage_path) }
     it { is_expected.to respond_to(:access_key) }
@@ -14,8 +14,8 @@ module S3AwsUploader
       subject(:config) do
         c = Config.new
         c.storage_path = "FOO PATH"
-        c.access_key = "A KEY"
-        c.secret_key = "ANOTHER KEY"
+        c.access_key = "A KEY RANDOM"
+        c.secret_key = "ANOTHER KEY RANDOM"
         c.host = "A HOST"
         c.policy_expiration = 10
         c.max_filesize = 20
@@ -24,8 +24,8 @@ module S3AwsUploader
       end
 
       it { expect(subject.storage_path).to eq "FOO PATH" }
-      it { expect(subject.access_key).to eq "A KEY" }
-      it { expect(subject.secret_key).to eq "ANOTHER KEY" }
+      it { expect(subject.access_key).to eq "A KEY RANDOM" }
+      it { expect(subject.secret_key).to eq "ANOTHER KEY RANDOM" }
       it { expect(subject.host).to eq "A HOST" }
       it { expect(subject.policy_expiration).to eq 10 }
       it { expect(subject.max_filesize).to eq 20 }
@@ -41,7 +41,6 @@ module S3AwsUploader
       it { expect(subject.bucket).to eql "s3_uploader"}
       it { expect{ subject.access_key }.to raise_error("No access key specified") }
       it { expect{ subject.secret_key }.to raise_error("No secret_key specified") }
-      it { expect{ subject.host }.to raise_error("No host key specified") }
     end
   end
 end
