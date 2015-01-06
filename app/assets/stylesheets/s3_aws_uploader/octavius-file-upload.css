@@ -1,0 +1,8 @@
+.file-upload-filename {
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.progress {
+  margin-top: 0.75rem;
+}

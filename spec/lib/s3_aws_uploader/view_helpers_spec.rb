@@ -12,7 +12,7 @@ module S3AwsUploader
     end
 
     it "generates HTML for a file form" do 
-      expect(upload_form.s3_upload_field(:product_image, 'localhost/s3_upload')).to eql '<input id="product_image_upload" name="file" type="file" data-path="localhost/s3_upload" />'
+      expect(upload_form.s3_upload_field(:product_image, 'localhost/s3_upload')).to eql '<input id="product_image" name="file" type="file" data-path="localhost/s3_upload" style="display: none;" />'
     end
 
     it "generates a progress bar" do
