@@ -1,31 +1,22 @@
 /*
- * Clean up the way the 3 selectors are specified (can this be merged down to two?)
- *
- * SPECIFY CUSTOM BUTTON STYLE THROUGH SOME SORT OF METHOD OVERRIDE...
  *
  *
  */
 
 "use strict";
 
-// Constructor
 function OctaviusUpload(modelName, fieldName) {
+
+  var chooseFileButtonSelector = '#' + fieldName + '_choose_file';
+  var filenameSelector = '#' + fieldName + '_filename';
 
   var inputReplacementSelector = '#' + modelName + '_' + fieldName;
   var fileInputSelector = '#' + fieldName;
-  var progressBarSelector = '#' + fieldName + '_progress'; 
-  var replaceFileId = fileInputSelector + '_replace_file';
-  var chooseFileSelector = fileInputSelector + '_choose_file';
-  this.buttonClassStyle = 'btn btn-default btn-xs';
+  var progressBarSelector = '#' + fieldName + '_progress';
 
-  var self = this;
-
-  $('body').on("click", replaceFileId, function() {
+  $('body').on("click", chooseFileButtonSelector, function() {
     $(fileInputSelector).click();
-  });
-
-  $('body').on("click", chooseFileSelector, function() {
-    $(fileInputSelector).click();
+    $(chooseFileButtonSelector).blur();
   });
 
   $(fileInputSelector).fileupload({ 
@@ -83,28 +74,17 @@ function OctaviusUpload(modelName, fieldName) {
       $(progressBarSelector).css('width', fileUploadProgress+'%').attr('aria-valuenow', fileUploadProgress);
     },
     done: function(e, data) {
-
-      var rId = replaceFileId.replace('#', '');
-      var newFilenameId = rId + "_filename";
-      var statusHTML = '<button id= "' + rId + '" type="button" class="<%= S3AwsUploader.config.button_style %>">replace file</button><div id="' + newFilenameId +'" class="file-upload-filename">' + data.files[0].name + '</div>';
-
-      var fileStatusSelector = fileInputSelector + '_status'
-
-      if(!$(replaceFileId).length) {
-        $(fileStatusSelector).html(statusHTML);
-      } else {
-        $('#' + newFilenameId).html(data.files[0].name);
-      }
+      $(chooseFileButtonSelector).html('replace file');
+      $(filenameSelector).html(data.files[0].name);
 
       var fileAmazonFullPath = $(data.result).find("PostResponse > Location").text();
       $(inputReplacementSelector).val(fileAmazonFullPath);
     },
     fail: function(e, data) {
       var errorMessage = $(data.jqXHR.responseXML).find("Error > Message").text();
-      var newFilenameId = replaceFileId + "_filename";
-
+      
       resetProgressBar();
-      $(newFilenameId).html('File failed to upload');
+      $(filenameSelector).html('Upload failed');
 
       alert('File failed to upload\n\n' + errorMessage);
     }
