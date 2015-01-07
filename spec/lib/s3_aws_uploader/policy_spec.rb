@@ -53,5 +53,4 @@ module S3AwsUploader
     it "may be able to change the name of the file on upload"
 
   end
-    
 end
