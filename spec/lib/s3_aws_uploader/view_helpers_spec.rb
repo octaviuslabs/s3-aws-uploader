@@ -5,11 +5,29 @@ module S3AwsUploader
 
   describe ViewHelpers do
 
+    before(:all) do
+      S3AwsUploader.configure do |c|
+        c.storage_path = "FOO PATH"
+        c.access_key = "A KEY"
+        c.secret_key = "ANOTHER KEY"
+        c.host = "A HOST"
+        c.policy_expiration = 10
+        c.max_filesize = 20
+        c.bucket = "MyBucket"
+      end
+    end
+
     subject(:upload_form) do 
       obj = Object.new
       obj.extend(S3AwsUploader::ViewHelpers)
       obj
     end
+
+    # The following fails
+    #
+    # it 'should have a button style defined on S3AwsUploader.config' do
+    #   expect(S3AwsUploader.config.button_style).to be_a String
+    # end
 
     it "generates HTML for a file form" do 
       expect(upload_form.s3_upload_field(:product_image, 'localhost/s3_upload')).to eql '<input id="product_image" name="file" type="file" data-path="localhost/s3_upload" style="display: none;" />'

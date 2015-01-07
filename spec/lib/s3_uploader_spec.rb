@@ -25,6 +25,7 @@ module S3AwsUploader
       end
       S3AwsUploader
     end
+
     it { expect(my_module.config.storage_path).to eql "FOO PATH" }
     it { expect(my_module.config.access_key).to eql "A KEY" }
     it { expect(my_module.config.secret_key).to eql "ANOTHER KEY" }
