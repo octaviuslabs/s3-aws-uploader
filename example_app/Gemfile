@@ -26,7 +26,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 gem 'jquery-fileupload-rails'
 
-gem 's3_aws_uploader', path: '../S3AwsUploader'
+gem 's3_aws_uploader', path: '../'
 
 gem 'bootstrap-sass'
 

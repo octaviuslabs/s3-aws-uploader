@@ -2,8 +2,6 @@ require "s3_aws_uploader/engine"
 require 's3_aws_uploader/config'
 require 's3_aws_uploader/policy'
 require 's3_aws_uploader/view_helpers'
-# require 's3_aws_uploader/test'
-
 
 module S3AwsUploader
 

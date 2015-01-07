@@ -20,6 +20,7 @@ module S3AwsUploader
         c.policy_expiration = 10
         c.max_filesize = 20
         c.bucket = "My Bucket"
+        c.button_style = "btn btn-default btn-xs"
         c
       end
 
@@ -30,7 +31,7 @@ module S3AwsUploader
       it { expect(subject.policy_expiration).to eq 10 }
       it { expect(subject.max_filesize).to eq 20 }
       it { expect(subject.bucket).to eq "My Bucket" }
-
+      it { expect(subject.button_style).to eq "btn btn-default btn-xs" }
 
     end
     context "should configure using defaults" do

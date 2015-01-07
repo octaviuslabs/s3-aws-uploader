@@ -17,7 +17,6 @@ module S3AwsUploader
     it { is_expected.to_not respond_to(:signature) }
     it { is_expected.to respond_to(:policy) }
 
-
     it "should have a properly formatted payload" do
       allow(subject).to receive(:policy_time_out){ TestUtils.current_time+60 }
       expect(subject.policy_payload).to eql TestUtils.example_policy_payload
@@ -35,7 +34,6 @@ module S3AwsUploader
       allow(subject).to receive(:host){ "A HOST" }
       expect(subject.to_h).to eql TestUtils.example_policy_hash
     end
-
 
     context "should complain if no config is provided" do
       before(:each){ S3AwsUploader.reset }
