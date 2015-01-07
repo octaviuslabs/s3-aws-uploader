@@ -1,36 +1,35 @@
-require 'rails_helper'
-require 'capybara-webkit'
-Capybara.javascript_driver = :webkit
+# require 'rails_helper'
+# require 'capybara-webkit'
+# Capybara.javascript_driver = :webkit
 
-feature 'javascript' do 
+# feature 'javascript' do 
 
-  describe 'upload' do
+#   describe 'upload' do
 
-    before(:all) do
-      S3AwsUploader.configure do |c|
-        c.storage_path = "uploads"
-        c.access_key = ENV["rc_aws_access_key_id"]
-        c.secret_key = ENV["rc_aws_secret_access_key"]
-        c.host = 's3.amazonaws.com'
-        c.policy_expiration = 60
-        c.max_filesize = 2
-        c.bucket = "responsive-creative-development"
-      end
-    end
+#     before(:all) do
+#       S3AwsUploader.configure do |c|
+#         c.storage_path = "uploads"
+#         c.access_key = ENV["rc_aws_access_key_id"]
+#         c.secret_key = ENV["rc_aws_secret_access_key"]
+#         c.host = 's3.amazonaws.com'
+#         c.policy_expiration = 60
+#         c.max_filesize = 2
+#         c.bucket = "responsive-creative-development"
+#       end
+#     end
 
-    it "should upload", :js => true do
-      visit('/')
-      expect(page).to have_content 'New'
+#     it "should upload", :js => true do
+#       visit('/')
+#       expect(page).to have_content 'New'
 
-      # product_image = page.find('#product_image', :visible=>false)
-      binding.pry
-      page.execute_script("$('#product_image').show()")
-      # binding.pry
-      attach_file('product_image', "#{Rails.root}/spec/sample_images/sample_image.jpg")
+#       # product_image = page.find('#product_image', :visible=>false)
+#       page.execute_script("$('#product_image').show()")
+#       # binding.pry
+#       attach_file('product_image', "#{Rails.root}/spec/sample_images/sample_image.jpg")
 
-      sleep 3
+#       sleep 3
 
-      expect('upload_product_image').to start_with "http"
-    end
-  end
-end
+#       expect('upload_product_image').to start_with "http"
+#     end
+#   end
+# end
