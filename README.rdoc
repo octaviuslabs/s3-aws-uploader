@@ -1,3 +1,0 @@
-= S3AwsUploader
-
-This project rocks and uses MIT-LICENSE.

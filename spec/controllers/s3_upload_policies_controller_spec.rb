@@ -6,6 +6,15 @@ module S3AwsUploader
   describe S3UploadPoliciesController, type: :controller do
     routes { S3AwsUploader::Engine.routes }
 
+    describe "routes" do 
+      it "routes post /policy/new" do
+        expect(:post => '/policy/new').to route_to(
+          :controller => "s3_aws_uploader/s3_upload_policies",
+          :action => "new"
+        )
+      end
+    end
+
     context "should respond successfully" do
       subject(:response) do
         TestUtils.setup_config
@@ -16,4 +25,5 @@ module S3AwsUploader
     end
     it "should not work if you are not authenticated"
   end
+
 end

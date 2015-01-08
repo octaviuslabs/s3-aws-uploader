@@ -1,0 +1,14 @@
+<p><%= link_to 'New Upload', new_upload_path, class: "btn btn-default btn-lg" %></p>
+
+<h2>Uploads</h2>
+
+<% @uploads.each do |upload| %>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <p><b>Upload:</b> <%= upload.id %></p>
+      <p><b>Product image:</b> <%= link_to(upload.product_image, upload.product_image) %></p>
+    </div>
+  </div>
+
+<% end %>

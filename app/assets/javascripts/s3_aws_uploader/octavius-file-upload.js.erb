@@ -1,10 +1,24 @@
 "use strict";
 
-function octaviusUpload(fileInputSelector, progressBarSelector, inputReplacementSelector) {
+function OctaviusUpload(modelName, fieldName) {
+
+  var chooseFileButtonSelector = '#' + fieldName + '_choose_file';
+  var filenameSelector = '#' + fieldName + '_filename';
+
+  var inputReplacementSelector = '#' + modelName + '_' + fieldName;
+  var fileInputSelector = '#' + fieldName;
+  var progressBarSelector = '#' + fieldName + '_progress';
+
+  $('body').on("click", chooseFileButtonSelector, function() {
+    $(fileInputSelector).click();
+    $(chooseFileButtonSelector).blur();
+  });
 
   $(fileInputSelector).fileupload({ 
     autoUpload: false,
     add: function(e, data) {
+
+      resetProgressBar();
 
       $.ajax({
         url: $(fileInputSelector).data('path'),
@@ -55,16 +69,23 @@ function octaviusUpload(fileInputSelector, progressBarSelector, inputReplacement
       $(progressBarSelector).css('width', fileUploadProgress+'%').attr('aria-valuenow', fileUploadProgress);
     },
     done: function(e, data) {
+      $(chooseFileButtonSelector).html('replace file');
+      $(filenameSelector).html(data.files[0].name);
+
       var fileAmazonFullPath = $(data.result).find("PostResponse > Location").text();
       $(inputReplacementSelector).val(fileAmazonFullPath);
     },
     fail: function(e, data) {
       var errorMessage = $(data.jqXHR.responseXML).find("Error > Message").text();
-      if (errorMessage) {
-        alert('File failed to upload =(\n\nError: ' + errorMessage);
-      } else {
-        alert('File failed to upload =(');
-      }
+      
+      resetProgressBar();
+      $(filenameSelector).html('Upload failed');
+
+      alert('File failed to upload\n\n' + errorMessage);
     }
   });
+
+  function resetProgressBar() {
+    $(progressBarSelector).css('width', '0%').attr('aria-valuenow', 0);
+  }
 }

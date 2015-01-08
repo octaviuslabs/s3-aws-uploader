@@ -19,16 +19,16 @@ module S3AwsUploader
 
     def self.example_policy_payload
       {
-          expiration: self.current_time+60,
-          conditions: [
-            #["starts-with", "$utf8", ""],
-            ["starts-with", "$key", ""],
-            ["content-length-range", 0, (1024 * (1024 ** 2))],
-            {bucket: "thebucket"},
-            {success_action_status: "201"},
-            {acl: "public-read"}
-          ]
-        }
+        expiration: self.current_time+60,
+        conditions: [
+          #["starts-with", "$utf8", ""],
+          ["starts-with", "$key", ""],
+          ["content-length-range", 0, (1024 * (1024 ** 2))],
+          {bucket: "thebucket"},
+          {success_action_status: "201"},
+          {acl: "public-read"}
+        ]
+      }
     end
 
     def self.example_policy_hash
