@@ -1,0 +1,91 @@
+"use strict";
+
+function OctaviusUpload(modelName, fieldName) {
+
+  var chooseFileButtonSelector = '#' + fieldName + '_choose_file';
+  var filenameSelector = '#' + fieldName + '_filename';
+
+  var inputReplacementSelector = '#' + modelName + '_' + fieldName;
+  var fileInputSelector = '#' + fieldName;
+  var progressBarSelector = '#' + fieldName + '_progress';
+
+  $('body').on("click", chooseFileButtonSelector, function() {
+    $(fileInputSelector).click();
+    $(chooseFileButtonSelector).blur();
+  });
+
+  $(fileInputSelector).fileupload({ 
+    autoUpload: false,
+    add: function(e, data) {
+
+      resetProgressBar();
+
+      $.ajax({
+        url: $(fileInputSelector).data('path'),
+        type: 'POST',
+        dataType: 'json',
+        async: false,
+        success: function(retData) {
+
+          $(fileInputSelector).fileupload('option', {
+            url: retData.url,
+            dataType: 'xml',
+            formData: [
+              {
+                name: 'key',
+                value: retData.key
+              },
+              {
+                name: 'acl',
+                value: retData.acl
+              },
+              {
+                name: 'policy',
+                value: retData.policy
+              },
+              {
+                name: 'signature',
+                value: retData.signature
+              },
+              {
+                name: 'AWSAccessKeyId',
+                value: retData.AWSAccessKeyId
+              },
+              {
+                name: 'success_action_status',
+                value: 201
+              }
+            ]
+          });
+
+          data.submit();
+
+        }
+      });
+    },
+    progress: function(e, data) {
+      var fileUploadProgress = parseInt(data.loaded / data.total * 100, 10);
+
+      $(progressBarSelector).css('width', fileUploadProgress+'%').attr('aria-valuenow', fileUploadProgress);
+    },
+    done: function(e, data) {
+      $(chooseFileButtonSelector).html('replace file');
+      $(filenameSelector).html(data.files[0].name);
+
+      var fileAmazonFullPath = $(data.result).find("PostResponse > Location").text();
+      $(inputReplacementSelector).val(fileAmazonFullPath);
+    },
+    fail: function(e, data) {
+      var errorMessage = $(data.jqXHR.responseXML).find("Error > Message").text();
+      
+      resetProgressBar();
+      $(filenameSelector).html('Upload failed');
+
+      alert('File failed to upload\n\n' + errorMessage);
+    }
+  });
+
+  function resetProgressBar() {
+    $(progressBarSelector).css('width', '0%').attr('aria-valuenow', 0);
+  }
+}
