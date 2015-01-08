@@ -24,7 +24,6 @@
 
 #       # product_image = page.find('#product_image', :visible=>false)
 #       page.execute_script("$('#product_image').show()")
-#       # binding.pry
 #       attach_file('product_image', "#{Rails.root}/spec/sample_images/sample_image.jpg")
 
 #       sleep 3
