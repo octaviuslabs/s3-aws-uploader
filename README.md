@@ -11,8 +11,10 @@ An example application demonstrating the gem's usage has been included for your 
 Add the gem to your gemfile.
 
     gem 's3_aws_uploader'
-    
+
 You will want to include the gems `jquery-fileupload-rails` and `bootstrap-sass`, or you can add these two libraries to your asset pipeline manually.
+
+    //= require jquery-fileupload/basic
 
 **/app/assets/javascripts/application.js**
 
@@ -25,7 +27,7 @@ Include the gem's JavaScript helper functions for your forms.
 Include the gem's lightweight styling for file uploads.
 
     @import "s3_aws_uploader/octavius-file-upload";
-    
+
 If you're not using Sass (and instead you have a application.css file), use the following line.
 
     //= s3_aws_uploader/octavius-file-upload
@@ -45,11 +47,11 @@ S3AwsUploader.configure do |c|
   c.bucket = "your-aws-bucket-name" # the name of your bucket
 end
 ```
-    
+
 You will need to set the environmental variables for `aws_access_key_id` and `aws_secret_access_key`. For example, you can set the environmental variable for aws_access_key_id from the command line with the following.
 
     export aws_access_key_id=your_aws_acces_key_id
-    
+
 **Enable CORS on your AWS S3 bucket**
 
 Make sure the AWS S3 CORS settings for your bucket look similar to the following:
